@@ -11,7 +11,7 @@ describe("Uuid Unit Tests", () => {
   });
 
   test("should create a valid uuid when no id is provided", () => {
-    const uuid = new Uuid("");
+    const uuid = new Uuid();
     expect(uuid.id).toBeDefined();
     expect(uuidValidate(uuid.id)).toBeTruthy(); // UUID length
     expect(validateSpy).toHaveBeenCalledTimes(1);
