@@ -1,7 +1,12 @@
+import { EntityValidationError } from "../../../shared/domain/validators/validation.error";
 import { Uuid } from "../../../shared/domain/value-ojects/uuid.vo";
 import { Category } from "../category.entity";
 
 describe(`Category Unit Entity`, () => {
+  let validadeSpy: jest.SpyInstance;
+  beforeEach(() => {
+    validadeSpy = jest.spyOn(Category, "validade");
+  });
   describe(`constructor`, () => {
     test(`should create a category with all values`, () => {
       const props = {
@@ -50,6 +55,7 @@ describe(`Category Unit Entity`, () => {
       expect(category.is_active).toBe(command.is_active);
       expect(category.createdAt).toEqual(command.createdAt);
       expect(category.updatedAt).toEqual(command.updatedAt);
+      expect(validadeSpy).toHaveBeenCalledTimes(1);
     });
 
     test(`should create a category using the static create method witch default values`, () => {
@@ -64,6 +70,7 @@ describe(`Category Unit Entity`, () => {
       expect(category.is_active).toBeTruthy();
       expect(category.createdAt).toBeInstanceOf(Date);
       expect(category.updatedAt).toBeInstanceOf(Date);
+      expect(validadeSpy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -73,6 +80,7 @@ describe(`Category Unit Entity`, () => {
       category.changeName("New Name");
       expect(category.name).toBe("New Name");
       expect(category.updatedAt).toBeInstanceOf(Date);
+      expect(validadeSpy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -82,6 +90,7 @@ describe(`Category Unit Entity`, () => {
       category.changeDescription("New Description");
       expect(category.description).toBe("New Description");
       expect(category.updatedAt).toBeInstanceOf(Date);
+      expect(validadeSpy).toHaveBeenCalledTimes(1);
     });
 
     test(`should set description to null if passed null`, () => {
@@ -159,5 +168,85 @@ describe(`Category Unit Entity`, () => {
         }
       }
     );
+  });
+});
+
+describe("Validade method", () => {
+  test("should an invalid category with name property", () => {
+    expect(() => Category.create({ name: null })).containsErrorMessages({
+      name: [
+        "name should not be empty",
+        "name must be a string",
+        "name must be shorter than or equal to 255 characters",
+      ],
+    });
+
+    expect(() => Category.create({ name: "" })).containsErrorMessages({
+      name: ["name should not be empty"],
+    });
+
+    expect(() => Category.create({ name: 5 as any })).containsErrorMessages({
+      name: [
+        "name must be a string",
+        "name must be shorter than or equal to 255 characters",
+      ],
+    });
+
+    expect(() =>
+      Category.create({ name: "repeat".repeat(100) })
+    ).containsErrorMessages({
+      name: ["name must be shorter than or equal to 255 characters"],
+    });
+  });
+
+  test("should an invalid category with description property", () => {
+    expect(() =>
+      Category.create({ description: 5 } as any)
+    ).containsErrorMessages({
+      description: [
+        "description must be a string",
+        "description must be shorter than or equal to 1000 characters",
+      ],
+    });
+  });
+
+  test("should an invalid category with is_active property", () => {
+    expect(() =>
+      Category.create({ is_active: 5 } as any)
+    ).containsErrorMessages({
+      is_active: ["is_active must be a boolean value"],
+    });
+  });
+
+  test("should an invalid category with changeName", () => {
+    const category = Category.create({ name: "Test Category" });
+    expect(() => category.changeName(null)).containsErrorMessages({
+      name: [
+        "name should not be empty",
+        "name must be a string",
+        "name must be shorter than or equal to 255 characters",
+      ],
+    });
+
+    expect(() => category.changeName("")).containsErrorMessages({
+      name: ["name should not be empty"],
+    });
+
+    expect(() => category.changeName(5 as any)).containsErrorMessages({
+      name: [
+        "name must be a string",
+        "name must be shorter than or equal to 255 characters",
+      ],
+    });
+  });
+
+  test("should a invalid category using changeDescription", () => {
+    const category = Category.create({ name: "Test Category" });
+    expect(() => category.changeDescription(5 as any)).containsErrorMessages({
+      description: [
+        "description must be a string",
+        "description must be shorter than or equal to 1000 characters",
+      ],
+    });
   });
 });

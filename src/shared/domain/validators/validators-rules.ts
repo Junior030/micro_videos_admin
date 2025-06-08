@@ -1,3 +1,5 @@
+import { ValidationError } from "class-validator";
+
 export class ValidatorRules {
   private constructor(private value: any, private property: string) {}
 
