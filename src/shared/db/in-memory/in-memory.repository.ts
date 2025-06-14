@@ -95,7 +95,7 @@ export abstract class InMemorySearchableRepository<
 
   protected applySort(
     items: E[],
-    sort: string,
+    sort: string | null,
     sort_dir: SortDirection | null,
     custom_getter?: (sort: string, item: E) => any
   ) {
@@ -115,6 +115,7 @@ export abstract class InMemorySearchableRepository<
       if (aValue > bValue) {
         return sort_dir === "asc" ? 1 : -1;
       }
+
       return 0;
     });
   }

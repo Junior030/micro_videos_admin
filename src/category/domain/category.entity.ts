@@ -9,7 +9,7 @@ export type CategoryConstructoProps = {
   name: string;
   description?: string | null;
   is_active?: boolean;
-  createdAt?: Date;
+  created_at?: Date;
   updatedAt?: Date;
 };
 
@@ -24,7 +24,7 @@ export class Category extends Entity {
   name: string;
   description: string | null;
   is_active: boolean;
-  createdAt: Date;
+  created_at: Date;
   updatedAt: Date;
 
   constructor(props: CategoryConstructoProps) {
@@ -33,7 +33,7 @@ export class Category extends Entity {
     this.name = props.name;
     this.description = props.description ?? null;
     this.is_active = props.is_active ?? true;
-    this.createdAt = props.createdAt ?? new Date();
+    this.created_at = props.created_at ?? new Date();
     this.updatedAt = props.updatedAt ?? new Date();
   }
 
@@ -85,7 +85,7 @@ export class Category extends Entity {
       name: this.name,
       description: this.description,
       is_active: this.is_active,
-      createdAt: this.createdAt,
+      created_at: this.created_at,
       updatedAt: this.updatedAt,
     };
   }

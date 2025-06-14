@@ -13,7 +13,7 @@ describe(`Category Unit Entity`, () => {
         name: "Test Category",
         description: "A test category",
         is_active: false,
-        createdAt: new Date("2023-01-01"),
+        created_at: new Date("2023-01-01"),
         updatedAt: new Date("2023-01-01"),
       };
       const category = new Category(props);
@@ -21,7 +21,7 @@ describe(`Category Unit Entity`, () => {
       expect(category.name).toBe(props.name);
       expect(category.description).toBe(props.description);
       expect(category.is_active).toBe(props.is_active);
-      expect(category.createdAt).toEqual(props.createdAt);
+      expect(category.created_at).toEqual(props.created_at);
       expect(category.updatedAt).toEqual(props.updatedAt);
     });
 
@@ -34,7 +34,7 @@ describe(`Category Unit Entity`, () => {
       expect(category.name).toBe(props.name);
       expect(category.description).toBeNull();
       expect(category.is_active).toBe(true);
-      expect(category.createdAt).toBeInstanceOf(Date);
+      expect(category.created_at).toBeInstanceOf(Date);
       expect(category.updatedAt).toBeInstanceOf(Date);
     });
   });
@@ -45,7 +45,7 @@ describe(`Category Unit Entity`, () => {
         name: "Test Category",
         description: "A test category",
         is_active: false,
-        createdAt: new Date("2023-01-01"),
+        created_at: new Date("2023-01-01"),
         updatedAt: new Date("2023-01-01"),
       };
       const category = Category.create(command);
@@ -53,7 +53,7 @@ describe(`Category Unit Entity`, () => {
       expect(category.name).toBe(command.name);
       expect(category.description).toBe(command.description);
       expect(category.is_active).toBe(command.is_active);
-      expect(category.createdAt).toEqual(command.createdAt);
+      expect(category.created_at).toEqual(command.created_at);
       expect(category.updatedAt).toEqual(command.updatedAt);
       expect(validadeSpy).toHaveBeenCalledTimes(1);
     });
@@ -68,7 +68,7 @@ describe(`Category Unit Entity`, () => {
       expect(category.name).toBe(command.name);
       expect(category.description).toBe(command.description);
       expect(category.is_active).toBeTruthy();
-      expect(category.createdAt).toBeInstanceOf(Date);
+      expect(category.created_at).toBeInstanceOf(Date);
       expect(category.updatedAt).toBeInstanceOf(Date);
       expect(validadeSpy).toHaveBeenCalledTimes(1);
     });
@@ -131,7 +131,7 @@ describe(`Category Unit Entity`, () => {
         name: "Test Category",
         description: "A test category",
         is_active: false,
-        createdAt: new Date("2023-01-01"),
+        created_at: new Date("2023-01-01"),
         updatedAt: new Date("2023-01-01"),
       };
       const category = Category.create(props);
@@ -141,7 +141,7 @@ describe(`Category Unit Entity`, () => {
         name: props.name,
         description: props.description,
         is_active: props.is_active,
-        createdAt: props.createdAt,
+        created_at: props.created_at,
         updatedAt: props.updatedAt,
       });
     });
