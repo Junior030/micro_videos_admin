@@ -3,9 +3,9 @@ import { Uuid } from "../../../shared/domain/value-objects/uuid.vo";
 import { Category } from "../category.entity";
 
 describe(`Category Unit Entity`, () => {
-  let validadeSpy: jest.SpyInstance;
+  let validateSpy: jest.SpyInstance;
   beforeEach(() => {
-    validadeSpy = jest.spyOn(Category, "validade");
+    validateSpy = jest.spyOn(Category, "validate");
   });
   describe(`constructor`, () => {
     test(`should create a category with all values`, () => {
@@ -55,7 +55,7 @@ describe(`Category Unit Entity`, () => {
       expect(category.is_active).toBe(command.is_active);
       expect(category.created_at).toEqual(command.created_at);
       expect(category.updated_at).toEqual(command.updated_at);
-      expect(validadeSpy).toHaveBeenCalledTimes(1);
+      expect(validateSpy).toHaveBeenCalledTimes(1);
     });
 
     test(`should create a category using the static create method witch default values`, () => {
@@ -70,7 +70,7 @@ describe(`Category Unit Entity`, () => {
       expect(category.is_active).toBeTruthy();
       expect(category.created_at).toBeInstanceOf(Date);
       expect(category.updated_at).toBeInstanceOf(Date);
-      expect(validadeSpy).toHaveBeenCalledTimes(1);
+      expect(validateSpy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -80,7 +80,7 @@ describe(`Category Unit Entity`, () => {
       category.changeName("New Name");
       expect(category.name).toBe("New Name");
       expect(category.updated_at).toBeInstanceOf(Date);
-      expect(validadeSpy).toHaveBeenCalledTimes(1);
+      expect(validateSpy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -90,7 +90,7 @@ describe(`Category Unit Entity`, () => {
       category.changeDescription("New Description");
       expect(category.description).toBe("New Description");
       expect(category.updated_at).toBeInstanceOf(Date);
-      expect(validadeSpy).toHaveBeenCalledTimes(1);
+      expect(validateSpy).toHaveBeenCalledTimes(1);
     });
 
     test(`should set description to null if passed null`, () => {
@@ -171,7 +171,7 @@ describe(`Category Unit Entity`, () => {
   });
 });
 
-describe("Validade method", () => {
+describe("validate method", () => {
   test("should an invalid category with name property", () => {
     expect(() => Category.create({ name: null })).containsErrorMessages({
       name: [

@@ -8,7 +8,7 @@ import {
   SearchParams,
   SortDirection,
 } from "../../domain/repository/search-params";
-import { SearchResult } from "../../domain/repository/serach-result";
+import { SearchResult } from "../../domain/repository/search-result";
 import { ValueObject } from "../../domain/value-object";
 
 export abstract class InMemoryRepository<

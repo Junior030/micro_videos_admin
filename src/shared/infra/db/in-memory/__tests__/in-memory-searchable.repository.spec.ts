@@ -1,7 +1,7 @@
 import { InMemorySearchableRepository } from "../../../../db/in-memory/in-memory.repository";
 import { Entity } from "../../../../domain/entity";
 import { SearchParams } from "../../../../domain/repository/search-params";
-import { SearchResult } from "../../../../domain/repository/serach-result";
+import { SearchResult } from "../../../../domain/repository/search-result";
 import { Uuid } from "../../../../domain/value-objects/uuid.vo";
 
 type StubEntityConstructorProps = {

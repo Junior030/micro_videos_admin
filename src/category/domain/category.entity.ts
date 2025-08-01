@@ -44,37 +44,37 @@ export class Category extends Entity {
 
   static create(props: CategoryCreateCommand): Category {
     const category = new Category(props);
-    Category.validade(category);
+    Category.validate(category);
     return category;
   }
 
   changeName(name: string) {
     this.name = name;
     this.updated_at = new Date();
-    Category.validade(this);
+    Category.validate(this);
   }
 
   changeDescription(description: string | null) {
     this.description = description;
     this.updated_at = new Date();
-    Category.validade(this);
+    Category.validate(this);
   }
 
   activate(is_active: boolean) {
     this.is_active = is_active;
     this.updated_at = new Date();
-    Category.validade(this);
+    Category.validate(this);
   }
 
   deactivate() {
     this.is_active = false;
     this.updated_at = new Date();
-    Category.validade(this);
+    Category.validate(this);
   }
 
-  static validade(entity: Category) {
+  static validate(entity: Category) {
     const validator = CategoryValidatorFactory.create();
-    const isValid = validator.validade(entity);
+    const isValid = validator.validate(entity);
     if (!isValid) {
       throw new EntityValidationError(validator.erros);
     }

@@ -1,4 +1,4 @@
-import { SearchResult } from "../serach-result";
+import { SearchResult } from "../search-result";
 
 describe("SearchResult Unit Tests", () => {
   test("constructor props", () => {
