@@ -11,7 +11,7 @@ export type CategoryConstructoProps = {
   description?: string | null;
   is_active?: boolean;
   created_at?: Date;
-  updatedAt?: Date;
+  updated_at?: Date;
 };
 
 export type CategoryCreateCommand = {
@@ -26,7 +26,7 @@ export class Category extends Entity {
   description: string | null;
   is_active: boolean;
   created_at: Date;
-  updatedAt: Date;
+  updated_at: Date;
 
   constructor(props: CategoryConstructoProps) {
     super();
@@ -35,7 +35,7 @@ export class Category extends Entity {
     this.description = props.description ?? null;
     this.is_active = props.is_active ?? true;
     this.created_at = props.created_at ?? new Date();
-    this.updatedAt = props.updatedAt ?? new Date();
+    this.updated_at = props.updated_at ?? new Date();
   }
 
   get entity_id(): ValueObject {
@@ -50,25 +50,25 @@ export class Category extends Entity {
 
   changeName(name: string) {
     this.name = name;
-    this.updatedAt = new Date();
+    this.updated_at = new Date();
     Category.validade(this);
   }
 
   changeDescription(description: string | null) {
     this.description = description;
-    this.updatedAt = new Date();
+    this.updated_at = new Date();
     Category.validade(this);
   }
 
   activate(is_active: boolean) {
     this.is_active = is_active;
-    this.updatedAt = new Date();
+    this.updated_at = new Date();
     Category.validade(this);
   }
 
   deactivate() {
     this.is_active = false;
-    this.updatedAt = new Date();
+    this.updated_at = new Date();
     Category.validade(this);
   }
 
@@ -91,7 +91,7 @@ export class Category extends Entity {
       description: this.description,
       is_active: this.is_active,
       created_at: this.created_at,
-      updatedAt: this.updatedAt,
+      updated_at: this.updated_at,
     };
   }
 }
