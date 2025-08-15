@@ -1,13 +1,13 @@
 import { Op } from "sequelize";
-import { Entity } from "../../../../../shared/domain/entity";
-import { NotFoundError } from "../../../../../shared/domain/erros/not-found.error";
-import { Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
-import { Category } from "../../../category.entity";
+import { Entity } from "../../../../shared/domain/entity";
+import { NotFoundError } from "../../../../shared/domain/erros/not-found.error";
+import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
+import { Category } from "../../../domain/category.entity";
 import {
   CategorySearchParams,
   CategorySearchResult,
   ICategoryRepository,
-} from "../../../category.repository";
+} from "../../../domain/category.repository";
 import { CategoryModel } from "./category.model";
 import { CategoryModelMapper } from "./category-model-mapper";
 

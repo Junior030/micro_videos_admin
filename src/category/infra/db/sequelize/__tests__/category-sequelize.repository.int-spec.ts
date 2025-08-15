@@ -1,14 +1,14 @@
 import { CategoryModel } from "../category.model";
 import { CategorySequelizeRepository } from "../category-sequelize.repository";
-import { Category } from "../../../../category.entity";
-import { NotFoundError } from "../../../../../../shared/domain/erros/not-found.error";
-import { Uuid } from "../../../../../../shared/domain/value-objects/uuid.vo";
+import { Category } from "../../../../domain/category.entity";
+import { NotFoundError } from "../../../../../shared/domain/erros/not-found.error";
+import { Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { CategoryModelMapper } from "../category-model-mapper";
 import {
   CategorySearchParams,
   CategorySearchResult,
-} from "../../../../category.repository";
-import { setupSequelize } from "../../../../../../shared/infra/testing/helpers";
+} from "../../../../domain/category.repository";
+import { setupSequelize } from "../../../../../shared/infra/testing/helpers";
 
 describe("CategorySequelizeRepository Integration Test", () => {
   let repository: CategorySequelizeRepository;
