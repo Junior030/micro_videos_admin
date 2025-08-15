@@ -1,7 +1,7 @@
-import { InMemoryRepository } from "../../../../db/in-memory/in-memory.repository";
 import { Entity } from "../../../../domain/entity";
 import { NotFoundError } from "../../../../domain/erros/not-found.error";
 import { Uuid } from "../../../../domain/value-objects/uuid.vo";
+import { InMemoryRepository } from "../in-memory.repository";
 
 type StubEntityConstructor = {
   entity_id?: Uuid;

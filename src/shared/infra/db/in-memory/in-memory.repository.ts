@@ -1,21 +1,29 @@
-import { Entity } from "../../domain/entity";
-import { NotFoundError } from "../../domain/erros/not-found.error";
+import { Entity } from "../../../domain/entity";
+import { NotFoundError } from "../../../domain/erros/not-found.error";
 import {
   IRepository,
   ISearchableRepository,
-} from "../../domain/repository/repository-interface";
+} from "../../../domain/repository/repository-interface";
 import {
   SearchParams,
   SortDirection,
-} from "../../domain/repository/search-params";
-import { SearchResult } from "../../domain/repository/search-result";
-import { ValueObject } from "../../domain/value-object";
+} from "../../../domain/repository/search-params";
+import { SearchResult } from "../../../domain/repository/search-result";
+import { ValueObject } from "../../../domain/value-object";
 
 export abstract class InMemoryRepository<
   E extends Entity,
   EntityId extends ValueObject
 > implements IRepository<E, EntityId>
 {
+  findByIds(ids: EntityId[]): Promise<E[]> {
+    throw new Error("Method not implemented.");
+  }
+  existsById(
+    ids: EntityId[]
+  ): Promise<{ exists: EntityId[]; not_exists: EntityId[] }> {
+    throw new Error("Method not implemented.");
+  }
   items: E[] = [];
 
   async insert(entity: E): Promise<void> {
@@ -66,6 +74,14 @@ export abstract class InMemorySearchableRepository<
   extends InMemoryRepository<E, EntityId>
   implements ISearchableRepository<E, EntityId, Filter>
 {
+  findByIds(ids: EntityId[]): Promise<E[]> {
+    throw new Error("Method not implemented.");
+  }
+  existsById(
+    ids: EntityId[]
+  ): Promise<{ exists: EntityId[]; not_exists: EntityId[] }> {
+    throw new Error("Method not implemented.");
+  }
   sortableFields: string[] = [];
   async search(props: SearchParams<Filter>): Promise<SearchResult<E>> {
     const itenmsFiltered = await this.applyFilter(this.items, props.filter);
