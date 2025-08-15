@@ -6,7 +6,6 @@ export class Config {
 
   static db() {
     Config.readEnv();
-    console.log(Config);
 
     return {
       dialect: "sqlite" as any,

@@ -50,8 +50,8 @@ export class CategorySequelizeRepository implements ICategoryRepository {
     }
   }
 
-  async delete(category: Uuid): Promise<void> {
-    const id = category.id;
+  async delete(category_id: Uuid): Promise<void> {
+    const id = category_id.id;
 
     const affectedRows = await this.categoryModel.destroy({
       where: { category_id: id },

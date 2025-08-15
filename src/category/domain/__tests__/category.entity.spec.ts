@@ -107,7 +107,7 @@ describe(`Category Unit Entity`, () => {
         name: "Inactive Category",
         is_active: false,
       });
-      category.activate(true);
+      category.activate();
       expect(category.is_active).toBe(true);
       expect(category.updated_at).toBeInstanceOf(Date);
     });

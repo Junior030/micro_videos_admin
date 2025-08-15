@@ -60,8 +60,8 @@ export class Category extends Entity {
     Category.validate(this);
   }
 
-  activate(is_active: boolean) {
-    this.is_active = is_active;
+  activate() {
+    this.is_active = true;
     this.updated_at = new Date();
     Category.validate(this);
   }
