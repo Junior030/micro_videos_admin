@@ -1,5 +1,4 @@
 import { Entity } from "../../shared/domain/entity";
-import { EntityValidationError } from "../../shared/domain/validators/validation.error";
 import { ValueObject } from "../../shared/domain/value-object";
 import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
 import { CategoryFakeBuilder } from "./category-fake.builder";
@@ -44,40 +43,34 @@ export class Category extends Entity {
 
   static create(props: CategoryCreateCommand): Category {
     const category = new Category(props);
-    Category.validate(category);
+    category.validate(["name"]);
     return category;
   }
 
   changeName(name: string) {
     this.name = name;
     this.updated_at = new Date();
-    Category.validate(this);
+    this.validate(["name"]);
   }
 
   changeDescription(description: string | null) {
     this.description = description;
     this.updated_at = new Date();
-    Category.validate(this);
   }
 
   activate() {
     this.is_active = true;
     this.updated_at = new Date();
-    Category.validate(this);
   }
 
   deactivate() {
     this.is_active = false;
     this.updated_at = new Date();
-    Category.validate(this);
   }
 
-  static validate(entity: Category) {
+  validate(fields?: string[]) {
     const validator = CategoryValidatorFactory.create();
-    const isValid = validator.validate(entity);
-    if (!isValid) {
-      throw new EntityValidationError(validator.erros);
-    }
+    return validator.validate(this.notification, this, fields);
   }
 
   static fake() {
