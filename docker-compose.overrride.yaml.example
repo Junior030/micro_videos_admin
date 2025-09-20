@@ -1,0 +1,8 @@
+version: '3'
+
+sevices:
+
+  db:
+    volumes:
+      - ./.docker/dbdata:/var/lib/mysql:delegated
+    tmpfs: !reset []
