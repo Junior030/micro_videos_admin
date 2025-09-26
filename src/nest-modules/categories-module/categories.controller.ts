@@ -7,6 +7,9 @@ import {
   Param,
   Delete,
   Inject,
+  HttpCode,
+  ParseUUIDPipe,
+  Query,
 } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -15,8 +18,12 @@ import { UpdateCategoryUseCase } from '@core/category/application/use-cases/upda
 import { DeleteCategoryUseCase } from '@core/category/application/use-cases/delete-category/delete-category.use-case';
 import { GetCategoryUseCase } from '@core/category/application/use-cases/get-category/get-category.use.case';
 import { ListCategoriesUseCase } from '@core/category/application/use-cases/list-category/list-category.use-case';
-import { CategoriesPresenter } from './categories.presenter';
+import {
+  CategoriesPresenter,
+  CategoryCollectionPresenter,
+} from './categories.presenter';
 import { CategoryOutput } from '@core/category/application/use-cases/common/category-output';
+import { SearchCategoriesDto } from './dto/search-category.dto';
 
 @Controller('categories')
 export class CategoriesController {
@@ -44,18 +51,22 @@ export class CategoriesController {
   }
 
   @Get()
-  findAll() {
-    return 'this.listUseCasa.execute()';
+  async search(@Query() searchCategoriesInput: SearchCategoriesDto) {
+    const output = await this.listUseCasa.execute(searchCategoriesInput);
+    return new CategoryCollectionPresenter(output);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.getUseCase.execute({ id });
+  async findOne(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
+  ) {
+    const output = await this.getUseCase.execute({ id });
+    return CategoriesController.seralize(output);
   }
 
   @Patch(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
     const output = await this.updateUseCase.execute({
@@ -65,8 +76,11 @@ export class CategoriesController {
     return CategoriesController.seralize(output);
   }
 
+  @HttpCode(204)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
+  ) {
     return this.deleteUseCase.execute({ id });
   }
 
