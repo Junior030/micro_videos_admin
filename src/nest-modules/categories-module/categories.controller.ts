@@ -19,7 +19,7 @@ import { DeleteCategoryUseCase } from '@core/category/application/use-cases/dele
 import { GetCategoryUseCase } from '@core/category/application/use-cases/get-category/get-category.use.case';
 import { ListCategoriesUseCase } from '@core/category/application/use-cases/list-category/list-category.use-case';
 import {
-  CategoriesPresenter,
+  CategoryPresenter,
   CategoryCollectionPresenter,
 } from './categories.presenter';
 import { CategoryOutput } from '@core/category/application/use-cases/common/category-output';
@@ -40,7 +40,7 @@ export class CategoriesController {
   private getUseCase: GetCategoryUseCase;
 
   @Inject(ListCategoriesUseCase)
-  private listUseCasa: ListCategoriesUseCase;
+  private listUseCase: ListCategoriesUseCase;
 
   constructor() {}
 
@@ -52,7 +52,7 @@ export class CategoriesController {
 
   @Get()
   async search(@Query() searchCategoriesInput: SearchCategoriesDto) {
-    const output = await this.listUseCasa.execute(searchCategoriesInput);
+    const output = await this.listUseCase.execute(searchCategoriesInput);
     return new CategoryCollectionPresenter(output);
   }
 
@@ -85,6 +85,6 @@ export class CategoriesController {
   }
 
   static seralize(output: CategoryOutput) {
-    return new CategoriesPresenter(output);
+    return new CategoryPresenter(output);
   }
 }
