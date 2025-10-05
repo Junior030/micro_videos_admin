@@ -1,11 +1,11 @@
 import { SortDirection } from '@core/shared/domain/repository/search-params';
-import { CategoriesController } from './categories.controller';
+import { CategoriesController } from '../categories.controller';
 import { CreateCategoryOutput } from '@core/category/application/use-cases/create-category/create-category.use-case';
-import { CreateCategoryDto } from './dto/create-category.dto';
+import { CreateCategoryDto } from '../dto/create-category.dto';
 import {
   CategoryCollectionPresenter,
   CategoryPresenter,
-} from './categories.presenter';
+} from '../categories.presenter';
 import { UpdateCategoryOutput } from '@core/category/application/use-cases/updated-category/updated-category.use-case';
 import { UpdateCategoryInput } from '@core/category/application/use-cases/updated-category/updated-category.input';
 import { GetCategoryOutput } from '@core/category/application/use-cases/get-category/get-category.use.case';

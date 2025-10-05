@@ -1,14 +1,14 @@
-import { IUseCase } from "../../../../shared/application/use-case.interface";
-import { NotFoundError } from "../../../../shared/domain/erros/not-found.error";
-import { EntityValidationError } from "../../../../shared/domain/validators/validation.error";
-import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
-import { Category } from "../../../domain/category.entity";
-import { ICategoryRepository } from "../../../domain/category.repository";
+import { IUseCase } from '../../../../shared/application/use-case.interface';
+import { NotFoundError } from '../../../../shared/domain/erros/not-found.error';
+import { EntityValidationError } from '../../../../shared/domain/validators/validation.error';
+import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
+import { Category } from '../../../domain/category.entity';
+import { ICategoryRepository } from '../../../domain/category.repository';
 import {
   CategoryOutputMapper,
   CategoryOutput,
-} from "../common/category-output";
-import { UpdateCategoryInput } from "./updated-category.input";
+} from '../common/category-output';
+import { UpdateCategoryInput } from './updated-category.input';
 
 export class UpdateCategoryUseCase
   implements IUseCase<UpdateCategoryInput, UpdateCategoryOutput>
@@ -23,8 +23,11 @@ export class UpdateCategoryUseCase
       throw new NotFoundError(input.id, Category);
     }
 
-    input.name && category.changeName(input.name);
-    if ("description" in input) {
+    if (input.name) {
+      category.changeName(input.name);
+    }
+
+    if (input.description !== undefined) {
       category.changeDescription(input.description);
     }
 
