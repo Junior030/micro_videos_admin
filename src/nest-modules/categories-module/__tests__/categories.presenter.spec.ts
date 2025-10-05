@@ -1,8 +1,8 @@
 // categories.presenter.test.ts
 
 import {
-  CategoriesPresenter,
   CategoryCollectionPresenter,
+  CategoryPresenter,
 } from '../categories.presenter';
 
 describe('CategoriesPresenter', () => {
@@ -15,7 +15,7 @@ describe('CategoriesPresenter', () => {
       created_at: now,
       updated_at: now,
     };
-    const presenter = new CategoriesPresenter(output);
+    const presenter = new CategoryPresenter(output);
 
     expect(presenter.id).toBe(output.id);
     expect(presenter.name).toBe(output.name);
@@ -63,7 +63,7 @@ describe('CategoryCollectionPresenter', () => {
     expect(collection.data).toHaveLength(items.length);
 
     collection.data.forEach((item, idx) => {
-      expect(item).toBeInstanceOf(CategoriesPresenter);
+      expect(item).toBeInstanceOf(CategoryPresenter);
       expect(item.id).toBe(items[idx].id);
       expect(item.name).toBe(items[idx].name);
       expect(item.description).toBe(items[idx].description);
