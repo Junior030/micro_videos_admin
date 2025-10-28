@@ -19,8 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@core/*": ["./src/core/*"],
-      "@nest-modules/*": ["./src/nest-modules/*"],
-      "@app/*": ["./src/*"]
+      "@nest-modules/*": ["./src/nest-modules/*"]
     }
   }
 }

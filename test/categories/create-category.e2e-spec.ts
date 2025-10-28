@@ -3,6 +3,10 @@ import { ICategoryRepository } from '@core/category/domain/category.repository';
 import { startApp } from '@nest-modules/shared-module/testing/helpers';
 import { CreateCategoryFixture } from '@nest-modules/categories-module/testing/category-fixture';
 import { CATEGORY_PROVIDER } from '@nest-modules/categories-module/categories.providers';
+import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
+import { CategoriesController } from '@nest-modules/categories-module/categories.controller';
+import { CategoryOutputMapper } from '@core/category/application/use-cases/common/category-output';
+import { instanceToPlain } from 'class-transformer';
 
 describe('CategoriesController (e2e)', () => {
   const appHelper = startApp();
@@ -15,52 +19,83 @@ describe('CategoriesController (e2e)', () => {
   });
 
   describe('/categories (POST)', () => {
-    const arrange = CreateCategoryFixture.arrangeForCreate();
-    test.each(arrange)(
-      'when body is $send_data',
-      async ({ send_data, expected }) => {
-        const res = await request(appHelper.app.getHttpServer())
+    describe('should return a response error with 422 status code when request body is invalid', () => {
+      const invalidRequest = CreateCategoryFixture.arrangeInvalidRequest();
+      const arrange = Object.keys(invalidRequest).map((key) => ({
+        label: key,
+        value: invalidRequest[key],
+      }));
+
+      test.each(arrange)('when body is $label', async ({ value }) => {
+        return await request(appHelper.app.getHttpServer())
           .post('/categories')
-          .send(send_data)
-          .expect(201);
+          .send(value.send_data)
+          .expect(422)
+          .expect(value.expected);
+      });
+    });
 
-        const keysInResponse = CreateCategoryFixture.keysInResponse;
+    describe('should return a response error with 422 status code when throw EntityValidationError', () => {
+      const invalidRequest =
+        CreateCategoryFixture.arrangeForEntityValidationError();
+      const arrange = Object.keys(invalidRequest).map((key) => ({
+        label: key,
+        value: invalidRequest[key],
+      }));
 
-        expect(Object.keys(res.body)).toStrictEqual(['data']);
-        // const presenter = await controller.create(send_data);
-        // const entity = await categoryRepository.findById(
-        //   new Uuid(presenter.id),
-        // );
-        // expect(entity!.toJSON()).toStrictEqual({
-        //   category_id: presenter.id,
-        //   created_at: presenter.created_at,
-        //   updated_at: presenter.updated_at,
-        //   ...expected,
-        // });
-        // const output = CategoryOutputMapper.toOutput(entity!);
-        // expect(presenter).toEqual(new CategoryPresenter(output));
-      },
-    );
+      test.each(arrange)('when body is $label', async ({ value }) => {
+        return await request(appHelper.app.getHttpServer())
+          .post('/categories')
+          .send(value.send_data)
+          .expect(422)
+          .expect(value.expected);
+      });
+    });
+
+    describe('should create a category', () => {
+      const arrange = CreateCategoryFixture.arrangeForCreate();
+      test.each(arrange)(
+        'when body is $send_data',
+        async ({ send_data, expected }) => {
+          const res = await request(appHelper.app.getHttpServer())
+            .post('/categories')
+            .send(send_data)
+            .expect(201);
+
+          const keysInResponse = CreateCategoryFixture.keysInResponse;
+
+          expect(Object.keys(res.body)).toStrictEqual(['data']);
+          expect(Object.keys(res.body.data)).toStrictEqual(keysInResponse);
+
+          const id = res.body.data.id;
+          const categoryCreated = await categoryRepository.findById(
+            new Uuid(id),
+          );
+          const presenter = CategoriesController.seralize(
+            CategoryOutputMapper.toOutput(categoryCreated),
+          );
+          const seralize = instanceToPlain(presenter);
+          expect(res.body.data).toStrictEqual({
+            id: seralize.id,
+            created_at: seralize.created_at,
+            updated_at: seralize.updated_at,
+            ...expected,
+          });
+        },
+      );
+
+      // const presenter = await controller.create(send_data);
+      // const entity = await categoryRepository.findById(
+      //   new Uuid(presenter.id),
+      // );
+      // expect(entity!.toJSON()).toStrictEqual({
+      //   category_id: presenter.id,
+      //   created_at: presenter.created_at,
+      //   updated_at: presenter.updated_at,
+      //   ...expected,
+      // });
+      // const output = CategoryOutputMapper.toOutput(entity!);
+      // expect(presenter).toEqual(new CategoryPresenter(output));
+    });
   });
-  describe('', () => {});
-  describe('', () => {});
-  describe('', () => {});
-
-  // beforeEach(async () => {
-  //   console.log(process.env.NODE_ENV);
-
-  //   const moduleFixture: TestingModule = await Test.createTestingModule({
-  //     imports: [AppModule],
-  //   }).compile();
-
-  //   app = moduleFixture.createNestApplication();
-  //   await app.init();
-  // });
-
-  // it('/ (GET)', () => {
-  //   return request(app.getHttpServer())
-  //     .get('/')
-  //     .expect(200)
-  //     .expect('Hello World!');
-  // });
 });
