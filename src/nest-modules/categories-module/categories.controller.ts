@@ -47,7 +47,7 @@ export class CategoriesController {
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto) {
     const output = await this.createUseCase.execute(createCategoryDto);
-    return CategoriesController.seralize(output);
+    return CategoriesController.serialize(output);
   }
 
   @Get()
@@ -61,7 +61,7 @@ export class CategoriesController {
     @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
   ) {
     const output = await this.getUseCase.execute({ id });
-    return CategoriesController.seralize(output);
+    return CategoriesController.serialize(output);
   }
 
   @Patch(':id')
@@ -73,7 +73,7 @@ export class CategoriesController {
       ...updateCategoryDto,
       id,
     });
-    return CategoriesController.seralize(output);
+    return CategoriesController.serialize(output);
   }
 
   @HttpCode(204)
@@ -84,7 +84,7 @@ export class CategoriesController {
     return this.deleteUseCase.execute({ id });
   }
 
-  static seralize(output: CategoryOutput) {
+  static serialize(output: CategoryOutput) {
     return new CategoryPresenter(output);
   }
 }

@@ -54,7 +54,7 @@ describe('CategoriesController (e2e)', () => {
       expect(Object.keys(res.body)).toStrictEqual(['data']);
       expect(Object.keys(res.body.data)).toStrictEqual(keyInResponse);
 
-      const presenter = CategoriesController.seralize(
+      const presenter = CategoriesController.serialize(
         CategoryOutputMapper.toOutput(category),
       );
       const serialized = instanceToPlain(presenter);
