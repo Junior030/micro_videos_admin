@@ -1,14 +1,13 @@
 import { InMemorySearchableRepository } from '../../../../shared/infra/db/in-memory/in-memory.repository';
 import { SortDirection } from '../../../../shared/domain/repository/search-params';
-import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
-import { Category } from '../../../domain/category.entity';
+import { Category, CategoryId } from '../../../domain/category.aggregate';
 import {
   CategoryFilter,
   ICategoryRepository,
 } from '../../../domain/category.repository';
 
 export class CategoryInMemoryRepository
-  extends InMemorySearchableRepository<Category, Uuid>
+  extends InMemorySearchableRepository<Category, CategoryId>
   implements ICategoryRepository
 {
   sortableFields: string[] = ['name', 'created_at'];
@@ -29,10 +28,12 @@ export class CategoryInMemoryRepository
     return Category;
   }
 
-  findByIds(ids: Uuid[]): Promise<Category[]> {
+  findByIds(ids: CategoryId[]): Promise<Category[]> {
     throw new Error('Method not implemented.');
   }
-  existsById(ids: Uuid[]): Promise<{ exists: Uuid[]; not_exists: Uuid[] }> {
+  existsById(
+    ids: CategoryId[],
+  ): Promise<{ exists: CategoryId[]; not_exists: CategoryId[] }> {
     throw new Error('Method not implemented.');
   }
 
