@@ -30,6 +30,7 @@ export type CastMemberModelProps = {
   name: string;
   type: CastMemberTypes;
   created_at: Date;
+  updated_at: Date;
 };
 
 @Table({ tableName: 'cast_members', timestamps: false })
@@ -49,10 +50,13 @@ export class CastMemberModel extends Model<CastMemberModelProps> {
 
   @Column({ allowNull: false, type: DataType.DATE(3) })
   declare created_at: Date;
+
+  @Column({ allowNull: false, type: DataType.DATE(3) })
+  declare updated_at: Date;
 }
 
 export class CastMemberSequelizeRepository implements ICastMemberRepository {
-  sortableFields: string[] = ['name', 'created_at'];
+  sortableFields: string[] = ['name', 'created_at', 'updated_at'];
   orderBy = {
     mysql: {
       name: (sort_dir: SortDirection) => literal(`binary name ${sort_dir}`),

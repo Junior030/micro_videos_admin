@@ -260,7 +260,11 @@ describe('CastMemberSequelizeRepository Integration Tests', () => {
     });
 
     it('should apply paginate and sort', async () => {
-      expect(repository.sortableFields).toStrictEqual(['name', 'created_at']);
+      expect(repository.sortableFields).toStrictEqual([
+        'name',
+        'created_at',
+        'updated_at',
+      ]);
 
       const castMembers = [
         CastMember.fake().anActor().withName('b').build(),

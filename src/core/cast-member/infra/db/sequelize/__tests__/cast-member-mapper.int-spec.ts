@@ -35,11 +35,13 @@ describe('CastMemberModelMapper Integration Tests', () => {
 
   it('should convert a cast member model to a cast member entity', () => {
     const created_at = new Date();
+    const updated_at = new Date();
     const model = CastMemberModel.build({
       cast_member_id: '5490020a-e866-4229-9adc-aa44b83234c4',
       name: 'some value',
       type: CastMemberTypes.ACTOR,
       created_at,
+      updated_at,
     });
     const entity = CastMemberModelMapper.toEntity(model);
     expect(entity.toJSON()).toStrictEqual(
@@ -50,6 +52,7 @@ describe('CastMemberModelMapper Integration Tests', () => {
         name: 'some value',
         type: CastMemberType.createAnActor(),
         created_at,
+        updated_at,
       }).toJSON(),
     );
   });

@@ -16,6 +16,7 @@ describe('CastMemberModel Integration Tests', () => {
       'name',
       'type',
       'created_at',
+      'updated_at',
     ]);
 
     const castMemberIdAttr = attributesMap.cast_member_id;
@@ -57,6 +58,7 @@ describe('CastMemberModel Integration Tests', () => {
       name: 'test',
       type: CastMemberTypes.ACTOR,
       created_at: new Date(),
+      updated_at: new Date(),
     };
     const castMember = await CastMemberModel.create(arrange);
     expect(castMember.toJSON()).toStrictEqual(arrange);
