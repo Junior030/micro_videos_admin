@@ -9,6 +9,7 @@ export class CategorySearchParams extends SearchParams<CategoryFilter> {}
 
 export class CategorySearchResult extends SearchResult<Category> {}
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ICategoryRepository
   extends ISearchableRepository<
     Category,
