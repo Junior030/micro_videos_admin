@@ -103,7 +103,7 @@ describe('UpdateCastMemberUseCase Integration Tests', () => {
         name: i.expected.name,
         type: i.expected.type,
         created_at: i.expected.created_at,
-        updated_at: entityUpdated.updated_at,
+        updated_at: entityUpdated!.updated_at,
       });
     }
   });

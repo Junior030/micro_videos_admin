@@ -6,7 +6,7 @@ import { CATEGORY_PROVIDER } from '@nest-modules/categories-module/categories.pr
 import { CategoriesController } from '@nest-modules/categories-module/categories.controller';
 import { CategoryOutputMapper } from '@core/category/application/use-cases/common/category-output';
 import { instanceToPlain } from 'class-transformer';
-import { CategoryId } from '@core/category/domain/category.aggregate';
+import { CategoryId, Category } from '@core/category/domain/category.aggregate';
 
 describe('CategoriesController (e2e)', () => {
   const appHelper = startApp();
@@ -72,7 +72,7 @@ describe('CategoriesController (e2e)', () => {
             new CategoryId(id),
           );
           const presenter = CategoriesController.serialize(
-            CategoryOutputMapper.toOutput(categoryCreated),
+            CategoryOutputMapper.toOutput(categoryCreated as Category),
           );
           const seralize = instanceToPlain(presenter);
           expect(res.body.data).toStrictEqual({
@@ -83,19 +83,6 @@ describe('CategoriesController (e2e)', () => {
           });
         },
       );
-
-      // const presenter = await controller.create(send_data);
-      // const entity = await categoryRepository.findById(
-      //   new Uuid(presenter.id),
-      // );
-      // expect(entity!.toJSON()).toStrictEqual({
-      //   category_id: presenter.id,
-      //   created_at: presenter.created_at,
-      //   updated_at: presenter.updated_at,
-      //   ...expected,
-      // });
-      // const output = CategoryOutputMapper.toOutput(entity!);
-      // expect(presenter).toEqual(new CategoryPresenter(output));
     });
   });
 });

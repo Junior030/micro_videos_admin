@@ -18,6 +18,10 @@ describe('CastMemberModelMapper Integration Tests', () => {
   it('should throws error when cast member is invalid', () => {
     const model = CastMemberModel.build({
       cast_member_id: '9366b7dc-2d71-4799-b91c-c64adb205104',
+      created_at: new Date(),
+      updated_at: new Date(),
+      name: 'test'.repeat(300),
+      type: undefined as any,
     });
     try {
       CastMemberModelMapper.toEntity(model);

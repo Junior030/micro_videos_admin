@@ -21,7 +21,7 @@ describe('CategorySequelizeRepository Integration Test', () => {
     const category = Category.fake().aCategory().build();
     await repository.insert(category);
     const entity = await repository.findById(category.category_id);
-    expect(entity.toJSON()).toStrictEqual(category.toJSON());
+    expect(entity!.toJSON()).toStrictEqual(category.toJSON());
   });
 
   it('should finds a entity by id', async () => {
